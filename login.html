@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .login-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+    }
+
+    .login-form h2 {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group input {
+        width: 95%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        outline: none;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #007bff;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    @media (max-width: 480px) {
+        .login-container {
+            padding: 15px;
+        }
+
+        .login-form h2 {
+            font-size: 24px;
+        }
+
+        .form-group input,
+        button {
+            font-size: 14px;
+            padding: 8px;
+        }
+    }
+</style>
+
+<body>
+    <div class="login-container">
+        <form class="login-form">
+            <h1 id="login-heder">Login Form</h1>
+            <div class="form-group">
+                <label for="email">Email :</label>
+                <input type="email" id="login-email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password :</label>
+                <input type="password" id="login-password" name="password">
+            </div>
+            <button type="submit">Submit</button>
+            <p>Move to <a href="singup.html">singup</a></p>
+        </form>
+    </div>
+</body>
+<script>
+   let userarray =  JSON.parse(localStorage.getItem("alluser"))||[]
+
+    let loginform = document.querySelector(".login-form")
+    let loginemail = document.querySelector("#login-email")
+    let loginpassword = document.querySelector("#login-password")
+    let loginhader = document.querySelector("#login-heder")
+
+    console.log(loginform, loginemail, loginpassword, loginhader);
+
+    loginform.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        let email = loginemail.value.trim();
+        let password = loginpassword.value.trim();
+
+        // validation
+        if (email && password) {
+            let currentuser = userarray.find((element, index) => {
+                return element.email === email;
+            })
+            if (currentuser) {
+                if (password === currentuser.password) {
+                    localStorage.setItem("currentuser", JSON.stringify(currentuser))
+                    window.location.href = "home.html"
+                } else {
+                    alert("wrong password");
+                }
+            } else {
+                console.log("hiii");
+            }
+        } else {
+            alert("please enter your detail")
+        }
+    })
+</script>
+
+</html>

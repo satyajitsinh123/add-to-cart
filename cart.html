@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cart-page</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    nav {
+        height: 50px;
+        width: 100%;
+        align-items: center;
+        display: flex;
+        justify-content: space-evenly;
+        background-color: brown;
+    }
+
+    ul {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        list-style: none;
+    }
+
+    li a {
+        font-size: 20px;
+        font-weight: 700;
+        text-decoration: none;
+        color: black;
+    }
+
+    .home-page {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    .home-page>div {
+        height: 350px;
+        width: 17%;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        /* border: 1px solid red; */
+        text-align: center;
+    }
+
+    .home-page>div>img {
+        height: 200px;
+        width: 100%;
+        border-radius: 0px 0px 10px 10px;
+    }
+
+    .home-page>div>button {
+        cursor: pointer;
+        padding: 5px;
+        background-color: black;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .home-page>div>p {
+        font-size: 20px;
+        font-weight: 400;
+        margin-top: 10px;
+    }
+</style>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="home.html">home</a></li>
+                <li><a href="cart.html">cart</a></li>
+                <li><a href="login.html">login</a></li>
+                <li><a href="login.html">log out</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="home-page">
+
+        </div>
+    </main>
+</body>
+<script>
+
+    let data = JSON.parse(localStorage.getItem("item-cart")) || [];
+
+    let homepage = document.querySelector(".home-page");
+
+    let rendringfunction = () => {
+
+        homepage.innerHTML = ""
+        data.forEach((element, index) => {
+            let cardDiv = document.createElement("div");
+
+            let img = document.createElement("img")
+            img.src = "https://images.pexels.com/photos/20021121/pexels-photo-20021121/free-photo-of-birds-eye-view-of-city.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
+
+            let h4 = document.createElement("h4");
+            h4.innerText = element.title;
+
+            let p = document.createElement("p");
+            p.innerText = element.price;
+
+            let addbtn = document.createElement("button");
+            addbtn.innerText = "remove"
+
+            addbtn.onclick = () => {
+                addhendler(index);
+            }
+
+            cardDiv.append(img, h4, p, addbtn);
+
+            homepage.append(cardDiv);
+
+        });
+    }
+
+    let addhendler = (index) => {
+        data.splice(index, 1);
+        localStorage.setItem("item-cart", JSON.stringify(data));
+        rendringfunction();
+    }
+
+    rendringfunction();
+
+</script>
+
+</html>
